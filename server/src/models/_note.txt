@@ -1,0 +1,9 @@
+Why do we have a <modelName>.model and <modelName>.mongo?
+
+The main reason for this is to hide mongo and mongoose implementation.
+
+The .mongo.js files defines the schema and export the model. In the .model.js files the model's data access functions are defined, using mongoose functions.
+
+To get or set data from/to database, we use the .model.js functions
+
+Working this way, if the database changes from mongo to SQL we just need to change the .model.js implementation, instead of re-creating all the model logic
