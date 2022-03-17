@@ -12,10 +12,13 @@ jobs:
     env:
       # CRA will know we are in CI and will disable watch mode on tests
       CI: true
+      # "local" db that will be created on the environment
+      MONGO_URL: mongodb://localhost/nasa
       # PORT: 9000
     strategy:
       matrix:
         node-version: [14.x, 16.x]
+        mongodb-version: ["4.4"]
     runs-on: ubuntu-latest # macos-latest, windows-latest
     steps:
       - uses: actions/checkout@v2 # built in github actions
@@ -24,6 +27,10 @@ jobs:
         with:
           # ${{}} is to use template literals
           node-version: ${{ matrix.node-version }}
+      - name: Use MongoDB from GitHub Actions
+        uses: supercharge/mongodb-github-action@1.7.0
+        with:
+          mongodb-version: ${{matrix.mongodb-version}}
       - run: npm install
       - run: npm run build --prefix client
       - run: npm test
