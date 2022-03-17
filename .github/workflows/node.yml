@@ -6,15 +6,23 @@ on: # when the pipeline process will triger (push or pr on master)
     branches: [master]
 jobs:
   build:
+    env:
+      CI: true # CRA will know we are in CI and will disable watch mode on tests
+      # PORT: 9000
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
     runs-on: ubuntu-latest # macos-latest, windows-latest
     steps:
       - uses: actions/checkout@v2 # built in github actions
-      - name: Use Node.js version 16
+      - name: Use Node.js version ${{ matrix.node-version }}
         uses: actions/setup-node@v2 # we are in above bullet point
         with:
-          node-version: "16"
+          # ${{}} is to use template literals
+          node-version: ${{ matrix.node-version }}
       - run: npm install
       - run: npm run build --prefix client
+      - run: npm test
 
   # deploy:
   # needs: build # now build will run first, then deploy
