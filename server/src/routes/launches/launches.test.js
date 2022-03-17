@@ -2,13 +2,17 @@
 const request = require("supertest");
 const { mongoConnect, mongoDisconnect } = require("../../services/mongo");
 const app = require("../../app");
+const { loadPlanetsData } = require("../../models/planets.model");
 
 // every test is inside a shared describe jest function
 // done this way to be able to connect to mongo
 // in each test
 describe("Launches API", () => {
   // this will run before all the tests
-  beforeAll(async () => await mongoConnect());
+  beforeAll(async () => {
+    await mongoConnect();
+    await loadPlanetsData();
+  });
   // this will run after all the tests
   afterAll(async () => await mongoDisconnect());
 
