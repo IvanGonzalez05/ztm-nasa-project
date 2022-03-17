@@ -1,5 +1,8 @@
+# name of the pipeline
 name: NASA Project CI
-on: # when the pipeline process will triger (push or pr on master)
+# when the pipeline process will triger (push or pr on master)
+on:
+  # events
   push:
     branches: [master]
   pull_request:
@@ -7,7 +10,8 @@ on: # when the pipeline process will triger (push or pr on master)
 jobs:
   build:
     env:
-      CI: true # CRA will know we are in CI and will disable watch mode on tests
+      # CRA will know we are in CI and will disable watch mode on tests
+      CI: true
       # PORT: 9000
     strategy:
       matrix:
