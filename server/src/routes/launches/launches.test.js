@@ -4,6 +4,9 @@ const { mongoConnect, mongoDisconnect } = require("../../services/mongo");
 const app = require("../../app");
 const { loadPlanetsData } = require("../../models/planets.model");
 
+// increments the timeout to 3 minutes, instead of defaulting to 5 seconds
+jest.setTimeout(3 * 60 * 1000);
+
 // every test is inside a shared describe jest function
 // done this way to be able to connect to mongo
 // in each test
